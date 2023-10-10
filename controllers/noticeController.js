@@ -1,4 +1,5 @@
 const { Notice, Company } = require('../models');
+const Sequelize = require('sequelize');
 
 const noticeController = {};
 
@@ -56,32 +57,47 @@ noticeController.deleteNotice = async (req, res) => {
 //채용공고 목록 조회
 noticeController.getNotices = async (req, res) => {
   try {
+    const searchValue = req.query.search;
+
+    let whereCondition = {};
+
+    if (searchValue) {
+      whereCondition = {
+        [Sequelize.Op.or]: [
+          { 'name': { [Sequelize.Op.like]: `%${searchValue}%` } },
+          { 'region': { [Sequelize.Op.like]: `%${searchValue}%` } },
+          { '$Notice.position$': { [Sequelize.Op.like]: `%${searchValue}%` } },
+          { '$Notice.skill$': { [Sequelize.Op.like]: `%${searchValue}%` } }
+        ]
+      };
+    }
+
     const notices = await Notice.findAll({
       attributes: ['id', 'position', 'reward', 'skill'],
       include: [{
         model: Company,
         as: 'company',
-        attributes: ['name', 'country', 'region']
+        attributes: ['name', 'country', 'region'],
+        where: whereCondition
       }]
     });
 
-    const responseData = notices.map(notice => {
-      return {
-        채용공고id: notice.id,
-        회사명: notice.company.name,
-        국가: notice.company.country,
-        지역: notice.company.region,
-        채용포지션: notice.position,
-        채용보상금: notice.reward,
-        사용기술: notice.skill
-      };
-    });
+    const formattedNotices = notices.map(notice => ({
+      채용공고_id: notice.id,
+      회사명: notice.company.name,
+      국가: notice.company.country,
+      지역: notice.company.region,
+      채용포지션: notice.position,
+      채용보상금: notice.reward,
+      사용기술: notice.skill
+    }));
 
-    res.json({ success: true, data: responseData });
+    res.json({ success: true, data: formattedNotices });
 
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
 
 module.exports = noticeController;
