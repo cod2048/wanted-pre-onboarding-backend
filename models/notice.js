@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Notice extends Model {
     static associate(models) {
@@ -17,14 +18,17 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
+
   Notice.init({
     position: DataTypes.STRING,
     reward: DataTypes.INTEGER,
     detail: DataTypes.TEXT,
-    skill: DataTypes.STRING
+    skill: DataTypes.STRING,
+    companyId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Notice',
   });
+
   return Notice;
 };
