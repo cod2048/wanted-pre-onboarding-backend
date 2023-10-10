@@ -1,4 +1,4 @@
-const { Notice } = require('../models');
+const { Notice, Company } = require('../models');
 
 const noticeController = {};
 
@@ -47,6 +47,37 @@ noticeController.deleteNotice = async (req, res) => {
 
     await notice.destroy();
     res.json({ success: true, message: "채용공고 삭제 성공" });
+
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+//채용공고 목록 조회
+noticeController.getNotices = async (req, res) => {
+  try {
+    const notices = await Notice.findAll({
+      attributes: ['id', 'position', 'reward', 'skill'],
+      include: [{
+        model: Company,
+        as: 'company',
+        attributes: ['name', 'country', 'region']
+      }]
+    });
+
+    const responseData = notices.map(notice => {
+      return {
+        채용공고id: notice.id,
+        회사명: notice.company.name,
+        국가: notice.company.country,
+        지역: notice.company.region,
+        채용포지션: notice.position,
+        채용보상금: notice.reward,
+        사용기술: notice.skill
+      };
+    });
+
+    res.json({ success: true, data: responseData });
 
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
