@@ -9,9 +9,9 @@ const PORT = 3000;
 app.use(express.json());
 
 // Routes
-app.use('/', companyRoutes);
-app.use('/', noticeRoutes);
-app.use('/', userRoutes);
+app.use('/company', companyRoutes);
+app.use('/notice', noticeRoutes);
+app.use('/user', userRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
