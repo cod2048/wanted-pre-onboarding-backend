@@ -99,5 +99,48 @@ noticeController.getNotices = async (req, res) => {
   }
 };
 
+//채용공고 상세 페이지 조회
+noticeController.getNoticeDetail = async (req, res) => {
+  try {
+    const noticeId = req.params.id;
+
+    const notice = await Notice.findOne({
+      where: { id: noticeId },
+      include: [{
+        model: Company,
+        as: 'company',
+        attributes: ['name', 'country', 'region']
+      }]
+    });
+
+    if (!notice) {
+      return res.status(404).json({ success: false, error: 'Notice not found' });
+    }
+
+    const otherNotices = await Notice.findAll({
+      where: { companyId: notice.companyId, id: { [Sequelize.Op.ne]: noticeId } },
+      attributes: ['id']
+    });
+
+    const response = {
+      채용공고_id: notice.id,
+      회사명: notice.company.name,
+      국가: notice.company.country,
+      지역: notice.company.region,
+      채용포지션: notice.position,
+      채용보상금: notice.reward,
+      사용기술: notice.skill,
+      채용내용: notice.detail,
+      회사가올린다른채용공고: otherNotices.map(n => n.id)
+    };
+
+    res.json({ success: true, data: response });
+
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+
 
 module.exports = noticeController;
