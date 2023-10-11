@@ -30,7 +30,7 @@ describe('Multiple Company Creation', () => {
     },
     {
       name: "Company 5",
-      region: "Tokyo"
+      country: "Japan"
     }
   ];
 
