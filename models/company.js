@@ -12,9 +12,25 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Company.init({
-    name: DataTypes.STRING,
-    country: DataTypes.STRING,
-    region: DataTypes.STRING
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: false,
+      unique: true
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    region: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Company',

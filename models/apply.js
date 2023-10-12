@@ -16,8 +16,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Apply.init({
-    userId: DataTypes.INTEGER,
-    noticeId: DataTypes.INTEGER
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
+    },
+    noticeId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Notices',
+        key: 'id'
+      }
+    }
   }, {
     sequelize,
     modelName: 'Apply',

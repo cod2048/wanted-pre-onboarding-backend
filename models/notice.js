@@ -20,15 +20,35 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   Notice.init({
-    position: DataTypes.STRING,
-    reward: DataTypes.INTEGER,
-    detail: DataTypes.TEXT,
-    skill: DataTypes.STRING,
-    companyId: DataTypes.INTEGER
+    companyId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Companies',
+        key: 'id'
+      },
+      allowNull: false
+    },
+    position: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    reward: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    detail: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    skill: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Notice',
   });
+
 
   return Notice;
 };
