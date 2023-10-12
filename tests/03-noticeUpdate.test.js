@@ -24,6 +24,6 @@ describe('Notice Data Update', () => {
     const response = await request(app)
       .put('/notice/124')
       .send(updateData);
-    expect(response.statusCode).toBe(500);
+    expect(response.statusCode).toBe(404);
   });
 });
