@@ -72,7 +72,7 @@ describe('Multiple Company Creation', () => {
   });
 
   wrongCompanies.forEach((companyData) => {
-    it(`should not create a user with invalid data`, async () => {
+    it(`should not create a company with invalid data`, async () => {
       const response = await request(app)
         .post('/company')
         .send(companyData);
