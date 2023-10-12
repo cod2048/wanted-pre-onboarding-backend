@@ -20,21 +20,27 @@ describe('Multiple Company Creation', () => {
   const companies = [
     {
       id: 1,
-      name: "Company 1",
-      country: "Korea",
-      region: "Seoul"
+      name: "원티드랩",
+      country: "한국",
+      region: "서울"
     },
     {
       id: 2,
-      name: "Company 2",
-      country: "USA",
-      region: "California"
+      name: "원티드코리아",
+      country: "한국",
+      region: "부산"
     },
     {
       id: 3,
-      name: "Company 3",
-      country: "Japan",
-      region: "Tokyo"
+      name: "네이버",
+      country: "한국",
+      region: "판교"
+    },
+    {
+      id: 4,
+      name: "카카오",
+      country: "한국",
+      region: "판교"
     }
   ];
   const wrongCompanies = [
@@ -43,11 +49,11 @@ describe('Multiple Company Creation', () => {
       region: "Seoul"
     },
     {
-      name: "Company 4",
+      name: "LG",
       region: "California"
     },
     {
-      name: "Company 5",
+      name: "Sony",
       country: "Japan"
     }
   ];
@@ -72,6 +78,6 @@ describe('Multiple Company Creation', () => {
         .send(companyData);
 
       expect(response.statusCode).toBe(500);
-    })
-  })
+    });
+  });
 });

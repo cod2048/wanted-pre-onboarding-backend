@@ -1,64 +1,65 @@
 const request = require('supertest');
 const app = require('../app');
+const notice = require('../models/notice');
 
-describe('Multiple Notice Creation'), () => {
+describe('Multiple Notice Creation', () => {
   //정상 채용공고 데이터
   const notices = [
     {
       companyId: 1,
-      position: "Backend Developer",
+      position: "백엔드 주니어 개발자",
+      reward: 1500000,
+      detail: "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은...",
+      skill: "Python"
+    },
+    {
+      companyId: 3,
+      position: "Django 백엔드 개발자",
       reward: 1000000,
-      detail: "Looking for a backend developer...",
-      skill: "Node.js"
+      detail: "네이버에서 백엔드 개발자를 채용합니다. 자격요건은...",
+      skill: "Django"
+    },
+    {
+      companyId: 2,
+      position: "프론트엔드 개발자",
+      reward: 500000,
+      detail: "원티드코리아에서 프론트엔드 개발자를 채용합니다. 자격요건은...",
+      skill: "javascript"
+    },
+    {
+      companyId: 4,
+      position: "Django 백엔드 개발자",
+      reward: 500000,
+      detail: "카카오에서 백엔드 개발자를 채용합니다. 자격요건은...",
+      skill: "PYTHON"
     },
     {
       companyId: 1,
-      position: "Fronted Developer",
-      reward: 150000,
-      detail: "Looking for a frontend developer...",
+      position: "프론트엔드 개발자",
+      reward: 1000000,
+      detail: "원티드랩에서 프론트엔드 개발자를 채용합니다. 자격요건은...",
       skill: "React"
     },
     {
-      companyId: 2,
-      position: "Fronted Engineer",
-      reward: 1000000,
-      detail: "Looking for a frontend engineer",
-      skill: "HTML"
-    },
-    {
-      companyId: 2,
-      position: "Backend Engineer",
+      companyId: 1,
+      position: "UI/UX 디자이너",
       reward: 500000,
-      detail: "Looking for a backend engineer",
-      skill: "PYTHON"
+      detail: "원티드랩에서 ui/ux 디자이너를 채용합니다. 자격요건은...",
+      skill: "photoshop",
     },
     {
       companyId: 3,
-      position: "Designer",
+      position: "서버개발자",
       reward: 1000000,
-      detail: "Looking for a designer",
-      skill: "Photoshop"
-    },
-    {
-      companyId: 3,
-      position: "Product Manager",
-      reward: 1200000,
-      detail: "Looking for a product manager",
-      skill: "Listening",
-    },
-    {
-      companyId: 3,
-      position: "Backend Developer",
-      reward: 1300000,
-      detail: "Looking for a backend developer",
-      skill: "PYTHON"
+      detail: "네이버에서 서버개발자를 채용합니다. 자격요건은...",
+      skill: "AWS"
     }
   ];
   //잘못된 채용공고 데이터
   const wrongNotices = [
     //없는 회사 id
     {
-      companyId: 4,
+      companyId: 6,
       position: "Backend Developer",
       reward: 1300000,
       detail: "Looking for a backend developer",
@@ -101,27 +102,24 @@ describe('Multiple Notice Creation'), () => {
     }
   ];
   notices.forEach((noticeData) => {
-    it(`should create a notice position : ${noticeData.position}`, async () => {
+    it(`should create a notice data : ${noticeData.position}`, async () => {
       const response = await request(app)
         .post('/notice')
         .send(noticeData);
       expect(response.statusCode).toBe(201);
-      expect(response.statusCode).toBe(201);
-      expect(response.statusCode).toBe(201);
-      expect(response.statusCode).toBe(201);
-      expect(response.statusCode).toBe(201);
-    })
-  })
+      expect(response.body.data.companyId).toBe(noticeData.companyId);
+      expect(response.body.data.position).toBe(noticeData.position);
+      expect(response.body.data.reward).toBe(noticeData.reward);
+      expect(response.body.data.detail).toBe(noticeData.detail);
+    });
+  });
 
-}
-
-describe('Job Notice Creation', () => {
-  it('should create a job notice', async () => {
-    const response = await request(app)
-      .post('/notice')
-      .send(noticeData);
-
-    expect(response.statusCode).toBe(200);
-    expect(response.body.position).toBe(noticeData.position);
+  wrongNotices.forEach((noticeData) => {
+    it(`should not create a notice data`, async () => {
+      const response = await request(app)
+        .post('/notice')
+        .send(noticeData);
+      expect(response.statusCode).toBe(500);
+    });
   });
 });
