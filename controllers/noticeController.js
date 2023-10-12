@@ -65,7 +65,7 @@ noticeController.deleteNotice = async (req, res) => {
     }
 
     await notice.destroy();
-    res.status(204);
+    res.status(204).send();
 
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
