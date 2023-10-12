@@ -8,7 +8,7 @@ describe('Multiple Notice Creation', () => {
     {
       companyId: 1,
       position: "백엔드 주니어 개발자",
-      reward: 1500000,
+      reward: 1000000,
       detail: "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은...",
       skill: "Python"
     },
