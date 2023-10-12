@@ -5,13 +5,13 @@ describe('Multiple User Creation', () => {
 
   const users = [
     {
-      name: "User 1"
+      name: "junik"
     },
     {
-      name: "User 2"
+      name: "messi"
     },
     {
-      name: "User 3"
+      name: "john"
     }
   ];
 
