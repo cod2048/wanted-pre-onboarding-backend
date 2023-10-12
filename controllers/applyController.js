@@ -24,7 +24,7 @@ applyController.applyForJob = async (req, res) => {
     delete returnValue.updatedAt;
     delete returnValue.createdAt;
 
-    res.json({ success: true, returnValue });
+    res.json({ success: true, data: returnValue });
 
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });

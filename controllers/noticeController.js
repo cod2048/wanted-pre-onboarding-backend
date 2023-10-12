@@ -12,7 +12,7 @@ noticeController.createNotice = async (req, res) => {
     delete returnValue.createdAt;
     delete returnValue.updatedAt;
 
-    res.status(201).json({ success: true, returnValue });
+    res.status(201).json({ success: true, data: returnValue });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -40,7 +40,7 @@ noticeController.updateNotice = async (req, res) => {
     delete returnValue.createdAt;
     delete returnValue.updatedAt;
 
-    res.json({ success: true, returnValue });
+    res.json({ success: true, data: returnValue });
 
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
