@@ -105,7 +105,11 @@ describe('Multiple Notice Creation'), () => {
       const response = await request(app)
         .post('/notice')
         .send(noticeData);
-      expect()
+      expect(response.statusCode).toBe(201);
+      expect(response.statusCode).toBe(201);
+      expect(response.statusCode).toBe(201);
+      expect(response.statusCode).toBe(201);
+      expect(response.statusCode).toBe(201);
     })
   })
 
