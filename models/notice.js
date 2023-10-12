@@ -6,11 +6,12 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Notice extends Model {
     static associate(models) {
+      //회사와 관계설정
       this.belongsTo(models.Company, {
         foreignKey: 'companyId',
         as: 'company'
       });
-
+      //user와 관계설정
       this.belongsToMany(models.User, {
         through: models.Apply,
         foreignKey: 'noticeId',

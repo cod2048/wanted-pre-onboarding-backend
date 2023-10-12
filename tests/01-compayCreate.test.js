@@ -4,8 +4,9 @@ const app = require('../app');
 const { Apply, Notice, Company, User } = require('../models');
 const { sequelize } = require('../models');
 
-
+//다른 모든 test code 실행 전 실행 함수
 beforeAll(async () => {
+  //db초기화
   await Apply.destroy({ where: {}, truncate: { cascade: true } });
   await Notice.destroy({ where: {}, truncate: { cascade: true } });
   await Company.destroy({ where: {}, truncate: { cascade: true } });
@@ -13,6 +14,7 @@ beforeAll(async () => {
   await sequelize.query(`ALTER SEQUENCE "Notices_id_seq" RESTART WITH 1`);
   await sequelize.query(`ALTER SEQUENCE "Applies_id_seq" RESTART WITH 1`);
 
+  //필요한 회사 data
   const companies = [
     {
       id: 1,
@@ -39,6 +41,8 @@ beforeAll(async () => {
       region: "판교"
     }
   ];
+
+  //필요한 채용공고 data
   const notices = [
     {
       companyId: 1,
@@ -90,6 +94,8 @@ beforeAll(async () => {
       skill: "AWS"
     }
   ];
+
+  //필요한 유저 data
   const users = [
     {
       id: 1,
@@ -105,13 +111,15 @@ beforeAll(async () => {
     }
   ];
 
+  //더미데이터 저장
   await Company.bulkCreate(companies);
   await Notice.bulkCreate(notices);
   await User.bulkCreate(users);
 });
 
-
+//여러개 회사 생성
 describe('Multiple Company Creation', () => {
+  //옳은 회사정보
   const companies = [
     {
       id: 10,
@@ -132,16 +140,20 @@ describe('Multiple Company Creation', () => {
       region: "testCountry3"
     }
   ];
+  //잘못된 회사정보
   const wrongCompanies = [
     {
+      //회사 id/이름 누락
       country: "Korea",
       region: "Seoul"
     },
     {
+      //회사 id/국가 누락
       name: "LG",
       region: "California"
     },
     {
+      //회사 id/지역 누락
       name: "Sony",
       country: "Japan"
     }

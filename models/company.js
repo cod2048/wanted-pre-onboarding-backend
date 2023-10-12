@@ -5,6 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Company extends Model {
     static associate(models) {
+      //채용공고와 관계설정
       this.hasMany(models.Notice, {
         foreignKey: 'companyId',
         as: 'notices'
@@ -13,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Company.init({
     id: {
+      //회사가 직접 id를 입력하도록 함
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,

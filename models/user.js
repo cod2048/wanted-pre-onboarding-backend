@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      // N:M 관계 설정
+      // 채용공고와 관계설정
       this.belongsToMany(models.Notice, {
         through: models.Apply,
         foreignKey: 'userId',
@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init({
     id: {
+      //user가 직접 id를 입력하도록 함
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: false,

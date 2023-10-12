@@ -7,6 +7,8 @@ const noticeController = {};
 noticeController.createNotice = async (req, res) => {
   try {
     const notice = await Notice.create(req.body);
+
+    //리턴값에 id/생성날짜/수정날짜 제거
     const returnValue = notice.toJSON();
     delete returnValue.id;
     delete returnValue.createdAt;
@@ -24,16 +26,20 @@ noticeController.updateNotice = async (req, res) => {
     const { id } = req.params;
     let updateData = req.body;
 
+    //회사id를 수정하려고 할 경우 해당 값은 삭제
     if (updateData.companyId) {
       delete updateData.companyId;
     }
 
+    //수정하려는 채용공고가 없을 경우
     const notice = await Notice.findByPk(id);
     if (!notice) {
       return res.status(404).json({ success: false, error: "Notice not found" });
     }
 
     await notice.update(updateData);
+
+    //리턴값에서 id/회사id/생성날짜/수정날짜 제거
     const returnValue = notice.toJSON();
     delete returnValue.id;
     delete returnValue.companyId;
@@ -53,6 +59,7 @@ noticeController.deleteNotice = async (req, res) => {
     const { id } = req.params;
     const notice = await Notice.findByPk(id);
 
+    //삭제하려는 채용공고가 없을 경우
     if (!notice) {
       return res.status(404).json({ success: false, error: "Notice not found" });
     }
@@ -73,6 +80,7 @@ noticeController.getNotices = async (req, res) => {
     let whereCondition = {};
 
     if (searchValue) {
+      //회사이름, 지역, 포지션, 스킬 4가지에서만 검색하도록 설정
       whereCondition = {
         [Sequelize.Op.or]: [
           { 'name': { [Sequelize.Op.like]: `%${searchValue}%` } },
@@ -83,6 +91,7 @@ noticeController.getNotices = async (req, res) => {
       };
     }
 
+    //반환값에 포함돼야하는 값 설정
     const notices = await Notice.findAll({
       attributes: ['id', 'position', 'reward', 'skill'],
       include: [{
@@ -93,6 +102,7 @@ noticeController.getNotices = async (req, res) => {
       }]
     });
 
+    //반환형식 요구사항에 맞게 수정
     const formattedNotices = notices.map(notice => ({
       채용공고_id: notice.id,
       회사명: notice.company.name,
@@ -128,11 +138,13 @@ noticeController.getNoticeDetail = async (req, res) => {
       return res.status(404).json({ success: false, error: 'Notice not found' });
     }
 
+    //회사가 올린 다른 채용공고 검색
     const otherNotices = await Notice.findAll({
       where: { companyId: notice.companyId, id: { [Sequelize.Op.ne]: noticeId } },
       attributes: ['id']
     });
 
+    //반환값 요구사항에 맞게 수정
     const response = {
       채용공고_id: notice.id,
       회사명: notice.company.name,

@@ -2,6 +2,7 @@ const { User } = require('../models');
 
 const userController = {};
 
+//유저 생성 함수
 userController.createUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
