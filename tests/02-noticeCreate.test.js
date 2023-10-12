@@ -1,54 +1,53 @@
 const request = require('supertest');
 const app = require('../app');
-const notice = require('../models/notice');
 
 describe('Multiple Notice Creation', () => {
   //정상 채용공고 데이터
   const notices = [
     {
-      companyId: 10,
+      companyId: 1,
       position: "testPosition1",
       reward: 1000000,
       detail: "testDetail1",
       skill: "testSkill1"
     },
     {
-      companyId: 12,
+      companyId: 1,
       position: "testPosition2",
       reward: 1000000,
       detail: "testDetail2",
       skill: "testSkill2"
     },
     {
-      companyId: 11,
+      companyId: 2,
       position: "testPosition3",
       reward: 500000,
       detail: "testDetail3",
       skill: "testSkill3"
     },
     {
-      companyId: 11,
+      companyId: 2,
       position: "testPosition4",
       reward: 500000,
       detail: "testDetail4",
       skill: "testSkill4"
     },
     {
-      companyId: 10,
-      position: "testDetail5",
+      companyId: 3,
+      position: "testPosition5",
       reward: 1000000,
       detail: "testDetail5",
       skill: "testSkill5"
     },
     {
-      companyId: 12,
+      companyId: 3,
       position: "testPosition6",
       reward: 500000,
       detail: "testDetail6",
       skill: "testSkill6",
     },
     {
-      companyId: 11,
+      companyId: 4,
       position: "testPosition7",
       reward: 1000000,
       detail: "testDetail7",

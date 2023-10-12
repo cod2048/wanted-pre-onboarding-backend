@@ -15,6 +15,6 @@ describe('Notice Data Search', () => {
       .get('/notice?search=Django');
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveLength(1);
+    expect(response.body).toHaveLength(2);
   });
 });
