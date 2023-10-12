@@ -46,7 +46,7 @@ noticeController.updateNotice = async (req, res) => {
     delete returnValue.createdAt;
     delete returnValue.updatedAt;
 
-    res.json({ success: true, data: returnValue });
+    res.status(200).json({ success: true, data: returnValue });
 
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -65,7 +65,7 @@ noticeController.deleteNotice = async (req, res) => {
     }
 
     await notice.destroy();
-    res.json({ success: true, message: "채용공고 삭제 성공" });
+    res.status(204);
 
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -113,7 +113,7 @@ noticeController.getNotices = async (req, res) => {
       사용기술: notice.skill
     }));
 
-    res.json(formattedNotices);
+    res.status(200).json(formattedNotices);
 
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -157,7 +157,7 @@ noticeController.getNoticeDetail = async (req, res) => {
       회사가올린다른채용공고: otherNotices.map(n => n.id)
     };
 
-    res.json(response);
+    res.status(200).json(response);
 
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });

@@ -14,7 +14,7 @@ applyController.applyForJob = async (req, res) => {
 
     //이미 지원했을 경우
     if (existingApply) {
-      return res.status(400).json({ success: false, error: '이미 지원한 채용공고' });
+      return res.status(403).json({ success: false, error: '이미 지원한 채용공고' });
     }
 
     //채용공고 정상 생성
@@ -28,7 +28,7 @@ applyController.applyForJob = async (req, res) => {
     delete returnValue.updatedAt;
     delete returnValue.createdAt;
 
-    res.json({ success: true, data: returnValue });
+    res.status(201).json({ success: true, data: returnValue });
 
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });

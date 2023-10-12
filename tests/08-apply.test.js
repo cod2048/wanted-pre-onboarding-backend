@@ -11,7 +11,7 @@ describe('Apply To Notice', () => {
         notice_id: 1
       });
 
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(201);
     expect(response.body.data.noticeId).toBe(1);
     expect(response.body.data.userId).toBe(1);
   });
@@ -25,7 +25,7 @@ describe('Apply To Notice', () => {
         notice_id: 1
       });
 
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(403);
     expect(response.body.error).toBe('이미 지원한 채용공고');
   })
 
