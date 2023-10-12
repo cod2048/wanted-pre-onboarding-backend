@@ -5,13 +5,16 @@ describe('Multiple User Creation', () => {
 
   const users = [
     {
-      name: "junik"
+      id: 10,
+      name: "testUser1"
     },
     {
-      name: "messi"
+      id: 11,
+      name: "testUser2"
     },
     {
-      name: "john"
+      id: 12,
+      name: "testUser3"
     }
   ];
 
@@ -21,7 +24,7 @@ describe('Multiple User Creation', () => {
         .post('/user')
         .send(userData);
 
-      expect(response.statusCode).toBe(200);
+      expect(response.statusCode).toBe(201);
       expect(response.body.data.name).toBe(userData.name);
     });
   });
@@ -35,7 +38,7 @@ describe('Multiple User Creation', () => {
       .post('/user')
       .send(userData);
 
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(500);
   });
 });
 

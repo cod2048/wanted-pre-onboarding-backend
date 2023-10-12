@@ -6,60 +6,60 @@ describe('Multiple Notice Creation', () => {
   //정상 채용공고 데이터
   const notices = [
     {
-      companyId: 1,
-      position: "백엔드 주니어 개발자",
+      companyId: 10,
+      position: "testPosition1",
       reward: 1000000,
-      detail: "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은...",
-      skill: "Python"
+      detail: "testDetail1",
+      skill: "testSkill1"
     },
     {
-      companyId: 3,
-      position: "Django 백엔드 개발자",
+      companyId: 12,
+      position: "testPosition2",
       reward: 1000000,
-      detail: "네이버에서 백엔드 개발자를 채용합니다. 자격요건은...",
-      skill: "Django"
+      detail: "testDetail2",
+      skill: "testSkill2"
     },
     {
-      companyId: 2,
-      position: "프론트엔드 개발자",
+      companyId: 11,
+      position: "testPosition3",
       reward: 500000,
-      detail: "원티드코리아에서 프론트엔드 개발자를 채용합니다. 자격요건은...",
-      skill: "javascript"
+      detail: "testDetail3",
+      skill: "testSkill3"
     },
     {
-      companyId: 4,
-      position: "Django 백엔드 개발자",
+      companyId: 11,
+      position: "testPosition4",
       reward: 500000,
-      detail: "카카오에서 백엔드 개발자를 채용합니다. 자격요건은...",
-      skill: "PYTHON"
+      detail: "testDetail4",
+      skill: "testSkill4"
     },
     {
-      companyId: 1,
-      position: "프론트엔드 개발자",
+      companyId: 10,
+      position: "testDetail5",
       reward: 1000000,
-      detail: "원티드랩에서 프론트엔드 개발자를 채용합니다. 자격요건은...",
-      skill: "React"
+      detail: "testDetail5",
+      skill: "testSkill5"
     },
     {
-      companyId: 1,
-      position: "UI/UX 디자이너",
+      companyId: 12,
+      position: "testPosition6",
       reward: 500000,
-      detail: "원티드랩에서 ui/ux 디자이너를 채용합니다. 자격요건은...",
-      skill: "photoshop",
+      detail: "testDetail6",
+      skill: "testSkill6",
     },
     {
-      companyId: 3,
-      position: "서버개발자",
+      companyId: 11,
+      position: "testPosition7",
       reward: 1000000,
-      detail: "네이버에서 서버개발자를 채용합니다. 자격요건은...",
-      skill: "AWS"
+      detail: "testDetail7",
+      skill: "testDetail8"
     }
   ];
   //잘못된 채용공고 데이터
   const wrongNotices = [
     //없는 회사 id
     {
-      companyId: 6,
+      companyId: 20,
       position: "Backend Developer",
       reward: 1300000,
       detail: "Looking for a backend developer",

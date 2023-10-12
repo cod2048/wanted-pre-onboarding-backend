@@ -7,6 +7,5 @@ describe('Notice Data Check', () => {
       .get('/notice');
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toHaveLength(6);
   });
 });

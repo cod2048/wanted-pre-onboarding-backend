@@ -32,7 +32,7 @@ describe('Apply To Notice', () => {
       .post('/apply')
       .send({
         user_id: 1,
-        notice_id: 12
+        notice_id: 120
       });
 
     expect(response.statusCode).toBe(500);
@@ -43,7 +43,7 @@ describe('Apply To Notice', () => {
     const response = await request(app)
       .post('/apply')
       .send({
-        user_id: 12,
+        user_id: 20,
         notice_id: 4
       });
 
