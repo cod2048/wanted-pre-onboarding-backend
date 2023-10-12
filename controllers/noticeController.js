@@ -7,7 +7,12 @@ const noticeController = {};
 noticeController.createNotice = async (req, res) => {
   try {
     const notice = await Notice.create(req.body);
-    res.status(201).json({ success: true, data: notice });
+    const returnValue = notice.toJSON();
+    delete returnValue.id;
+    delete returnValue.createdAt;
+    delete returnValue.updatedAt;
+
+    res.status(201).json({ success: true, returnValue });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -29,7 +34,13 @@ noticeController.updateNotice = async (req, res) => {
     }
 
     await notice.update(updateData);
-    res.json({ success: true, data: notice });
+    const returnValue = notice.toJSON();
+    delete returnValue.id;
+    delete returnValue.companyId;
+    delete returnValue.createdAt;
+    delete returnValue.updatedAt;
+
+    res.json({ success: true, returnValue });
 
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -92,7 +103,7 @@ noticeController.getNotices = async (req, res) => {
       사용기술: notice.skill
     }));
 
-    res.json({ success: true, data: formattedNotices });
+    res.json(formattedNotices);
 
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -134,7 +145,7 @@ noticeController.getNoticeDetail = async (req, res) => {
       회사가올린다른채용공고: otherNotices.map(n => n.id)
     };
 
-    res.json({ success: true, data: response });
+    res.json(response);
 
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });

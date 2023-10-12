@@ -16,11 +16,15 @@ applyController.applyForJob = async (req, res) => {
     }
 
     const newApply = await Apply.create({
-      userId: user_id,
-      noticeId: notice_id
+      noticeId: notice_id,
+      userId: user_id
     });
+    const returnValue = newApply.toJSON();
 
-    res.json({ success: true, data: newApply });
+    delete returnValue.updatedAt;
+    delete returnValue.createdAt;
+
+    res.json({ success: true, returnValue });
 
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
