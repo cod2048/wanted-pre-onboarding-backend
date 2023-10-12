@@ -41,7 +41,7 @@ describe('Multiple User Creation', () => {
   });
 
   //잘못된 유저 생성 시
-  wrongUsers((userData) => {
+  wrongUsers.forEach((userData) => {
     it(`should not create a user`, async () => {
       const response = await request(app)
         .post('/user')
