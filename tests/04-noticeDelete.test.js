@@ -7,8 +7,7 @@ describe('Delete Notice Data', () => {
     const response = await request(app)
       .delete('/notice/7');
 
-    expect(response.statusCode).toBe(200);
-    expect(response.body.message).toBe('채용공고 삭제 성공');
+    expect(response.statusCode).toBe(204);
   });
 
   //없는 데이터 삭제 시

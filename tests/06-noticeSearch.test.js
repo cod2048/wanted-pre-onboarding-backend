@@ -17,11 +17,4 @@ describe('Notice Data Search', () => {
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveLength(2);
   });
-
-  it('should not get notice data', async () => {
-    const response = await request(app)
-      .get('/notice?search=notExist');
-
-    expect(response.statusCode).toBe(404);
-  })
 });

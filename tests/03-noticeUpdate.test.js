@@ -1,8 +1,5 @@
 const request = require('supertest');
 const app = require('../app');
-const { Apply, Notice, Company, User } = require('../models');
-const { sequelize } = require('../models');
-
 describe('Notice Data Update', () => {
   //업데이트할 내용
   const updateData = {
