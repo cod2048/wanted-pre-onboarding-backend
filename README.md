@@ -92,13 +92,13 @@ npm install
 ### 환경 설정
 - 프로젝트 루트 경로에 `.env`파일 생성 후 아래내용 입력(본인 db에 맞는 내용으로 입력)
 ```
-DB_USERNAME=
-DB_PASSWORD=
-DB_DATABASE=
+DB_USERNAME=유저이름
+DB_PASSWORD=비밀번호
+DB_DATABASE=데이터베이스이름
 DB_HOST=localhost
 DB_DIALECT=postgres
 ```
-- postgresql이 없다면 설치해주세요.
+**- postgresql이 없다면 설치 후 db를 실행 및 생성해주세요.**
 ### 데이터베이스 마이그레이션
 ```
 npx sequelize-cli db:migrate
