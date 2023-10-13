@@ -43,10 +43,10 @@
 
 ### ERD
 ![ERD image](./erd.png)
-- 테이블 : 회사, 채용공고, 지원자, 지원내역
 - 관계
-  - 채용공고 table은 회사id와 관계 형성
-  - 지원내역 table은 채용공고id/유저id와 관계 형성
+  - 회사(1):채용공고(N) 관계 설정
+  - 유저(1):지원내역(N) 관계 설정
+  - 채용공고(1):지원내역(N) 관계 설정
 
 ### API 명세서
 |index|method|URL|body|description|
@@ -99,37 +99,46 @@ npm test
 테스트 실행 전 데이터베이스의 데이터를 모두 삭제하길 권장합니다.
 ### 테스트별 상세 설명
 총 8개 파일 / 37개 test
-- 회사 생성
-  - 올바른 회사데이터 / 필수 데이터가 누락 된 회사데이터 test
-- 채용공고 생성
-  - 올바른 채용공고데이터 / 필수 데이터가 누락 된 채용공고데이터 test
-- 채용공고 수정
-  - 보낸 데이터 제대로 저장 여부 test
-- 채용공고 삭제
-  - 있는 채용공고 / 없는 채용공고 삭제 test
-- 채용공고 조회
-  - 조회 요청 후 반환 statusCode 일치 test
-- 채용공고 검색 및 상세페이지 조회
-  - 더미데이터의 개수와 검색 된 데이터 개수 일치 test
-  - 존재하는 채용 상세페이지 / 존재하지 않는 채용 상세 페이지 test
-- 유저 생성
-  - 올바른 유저데이터 / 필수 데이터가 누락된 유저데이터 test
-- 채용공고 지원
-  - 올바른 지원 / 중복지원 / 잘못된 유저id / 잘못된 채용공고 id test
+- 회사 생성(01-companyCreate.test.js)
+  - 올바른 회사데이터일 경우 : statusCode(201)
+  - 필수 데이터가 누락 된 회사데이터일 경우 : statusCode(500)
+- 채용공고 생성(02-noticeCreate.test.js)
+  - 올바른 채용공고데이터일 경우 : statusCode(201)
+  - 필수 데이터가 누락 된 채용공고데이터 test : statusCode(500)
+- 채용공고 수정(03-noticeUpdate.test.js)
+  - 데이터 수정 성공 시 : statusCode(200)
+  - 없는 채용공고 업데이트 시도 시 : statusCode(404)
+- 채용공고 삭제(04-noticeDelete.test.js)
+  - 데이터 삭제 성공 시 : statusCode(204)
+  - 없는 채용공고 삭제 시도 시 : statusCode(404)
+- 채용공고 조회(05-noticeGet.test.js)
+  - 조회 성공 시 : statusCode(200)
+- 채용공고 검색 및 상세페이지 조회(06-noticeSearch.test.js)
+  - 검색 성공 시 : statusCode(200)
+  - 존재하는 채용 상세페이지 조회 시 : statusCode(200)
+  - 존재하지 않는 채용 상세페이지 조회 시 : statusCode(404)
+- 유저 생성(06-user.test.js)
+  - 올바른 유저데이터일 경우 : statusCode(201)
+  - 필수 데이터가 누락된 유저데이터일 경우 : statusCode(500)
+- 채용공고 지원(07-apply.test.js)
+  - 올바른 지원 시 : statusCode(201)
+  - 중복지원시 : statusCode(403)
+  - 없는 채용공고에 지원시 : statusCode(500)
+  - 없는 유저아이디로 지원시 : statusCode(500)
 ### 테스트 실행 결과
 
 ![test image](./testResult.png)
 
 ## 문제 및 해결
 1. 테이블 별 id 생성 방식
-    - 처음에는 4개의 테이블 모두 id를 자동생성 후 다음 데이터는 1씩 증가하도록 설정했습니다.
-    - company와 user는 id를 고유한 값으로 직접 설정해야한다고 생각했습니다.
-    - 채용공고와 지원내역은 id를 자동생성하고 회사와 유저는 생성 시 id값을 받되, 중복되면 안되도록 설정했습니다.
-2. 테스트 코드에서 검색 test실행 시 한국어를 인식하지 못하는 문제
-    - 과제에서 설명한 기능과 유사하게 테스트를 진행하기 위해 검색 키워드를 '원티드'로 설정 후 , postman을 이용한 결과는 정상적으로 나왔습니다.
-    - 유닛 테스트에 .get('/notice?search=원티드');로 코드를 작성 후 실행을 하니 아무런 값도 받아오지 못했습니다.
-    - url에 한국어를 입력 후 전송할 때의 인코딩 방식으로 맞춰주기 해 `.get('/notice?search=' + encodeURIComponent('원티드'));`로 변경 후 해결했습니다.
-3. 테스트 실행 후 종료 시 데이터 삭제를 해도 id가 1로 돌아가지 않는 문제 발생
-    - sequelize를 처음 사용해봐서 테스트 케이스 실행 종료 후 `await table명.destroy({ where: {}, truncate: true, restartIdentity: true });`을 코드에 작성해도 id가 1로 초기화 되지 않았습니다.
-    - 여러 문서와 stackoverflow를 참고해보니, `restartIdentity`가 제대로 작동하지 않는다는 여러 문서를 찾을 수 있었습니다.
-    - 쿼리문을 직접 사용해서 `await sequelize.query('ALTER SEQUENCE "table명_id_seq" RESTART WITH 1');` 해당 문제를 해결했습니다.
+    - 처음에는 4개의 테이블 모두 id를 자동생성 후 다음 데이터는 1씩 증가하도록 설정
+    - company와 user는 사용자가 직접 id를 지정할 수 있도록 변경
+    - 채용공고와 지원내역은 id를 자동생성하고 회사와 유저는 생성 시 id값을 받되, 중복이 불가능하도록 설정
+2. 검색 기능 test 시 한국어를 인식하지 못하는 문제
+    - 검색 키워드를 '원티드'로 설정 후 , postman을 이용한 결과는 정상적으로 반환됨
+    - 유닛 테스트에 .get('/notice?search=원티드');로 코드를 작성 후 실행을 하니 기대값과 다른 값 반환
+    - 전송할 때의 인코딩 방식을 맞춰주기 위해 코드를 `.get('/notice?search=' + encodeURIComponent('원티드'));`로 변경해서 해결
+3. 데이터 삭제를 해도 id가 1로 돌아가지 않는 문제 발생
+    - 테스트 케이스 실행 종료 후 `await table명.destroy({ where: {}, truncate: true, restartIdentity: true });`을 코드에 작성해도 id가 1로 초기화 되지 않음
+    - 여러 문서와 stackoverflow를 참고한 결과, `restartIdentity`가 제대로 작동하지 않는다는 문제 발견
+    - postgresql의 쿼리문을 직접 코드에 작성해서 `await sequelize.query('ALTER SEQUENCE "table명_id_seq" RESTART WITH 1');` 해당 문제를 해결
