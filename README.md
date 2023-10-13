@@ -70,7 +70,7 @@
 - 채용공고에 지원을 하기 위해서는 사용자id가 필요하기 때문에 사용자를 먼저 생성
 9. 채용공고 지원
 - 요구 데이터 : user_id, notice_id
-- 1회만 지원가능
+- 1회만 지원가능, 지원id는 1부터 자동생성
 
 ### API 명세서
 |index|method|URL|body|description|
