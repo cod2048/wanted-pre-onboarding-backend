@@ -40,7 +40,7 @@
 ## 프로젝트 상세 설명
 
 ### ERD
-![ERD image](./ERD.png)
+![ERD image](./erd.png)
 - 테이블 : 회사, 채용공고, 지원자, 지원내역
 - 관계
   - 채용공고 table은 회사id와 관계 형성
