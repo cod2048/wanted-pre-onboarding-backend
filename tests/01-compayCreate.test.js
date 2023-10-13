@@ -1,5 +1,11 @@
 const request = require('supertest');
 const app = require('../app');
+const { Company } = require('../models');
+
+afterAll(async () => {
+  const companyIds = [10, 11, 12];
+  await Company.destroy({ where: { id: companyIds } });
+})
 
 //여러개 회사 생성
 describe('Multiple Company Creation', () => {
@@ -43,6 +49,7 @@ describe('Multiple Company Creation', () => {
     }
   ];
 
+  //회사 생성 성공 시
   companies.forEach((companyData) => {
     it(`should create a company named ${companyData.name}`, async () => {
       const response = await request(app)
@@ -56,6 +63,7 @@ describe('Multiple Company Creation', () => {
     });
   });
 
+  //회사생성 실패시
   wrongCompanies.forEach((companyData) => {
     it(`should not create a company with invalid data`, async () => {
       const response = await request(app)

@@ -1,6 +1,13 @@
 const request = require('supertest');
 const app = require('../app');
 
+const { Apply, Notice, Company, User } = require('../models');
+const { sequelize } = require('../models');
+
+afterAll(async () => {
+  const userIds = [10, 11, 12];
+  await User.destroy({ where: { id: userIds } });
+});
 describe('Multiple User Creation', () => {
   //정상 유저 정보
   const users = [
@@ -27,7 +34,7 @@ describe('Multiple User Creation', () => {
       //name누락
       id: 1234
     }
-  ]
+  ];
   //정상 생성
   users.forEach((userData) => {
     it(`should create a user named ${userData.name}`, async () => {
@@ -48,8 +55,8 @@ describe('Multiple User Creation', () => {
         .send(userData);
 
       expect(response.statusCode).toBe(500);
-    })
-  })
+    });
+  });
 
 });
 
