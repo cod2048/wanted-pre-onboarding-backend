@@ -130,15 +130,22 @@ npm test
 ![test image](./testResult.png)
 
 ## 문제 및 해결
-1. 테이블 별 id 생성 방식
+1. 테이블 별 id 생성 방식<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**문제**
     - 처음에는 4개의 테이블 모두 id를 자동생성 후 다음 데이터는 1씩 증가하도록 설정
+    - 회사와 유저가 본인의 id를 모를 수도 있는 상황 가정</br>
+    **해결**
     - company와 user는 사용자가 직접 id를 지정할 수 있도록 변경
     - 채용공고와 지원내역은 id를 자동생성하고 회사와 유저는 생성 시 id값을 받되, 중복이 불가능하도록 설정
-2. 검색 기능 test 시 한국어를 인식하지 못하는 문제
+2. 검색 기능 test<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**문제**
     - 검색 키워드를 '원티드'로 설정 후 , postman을 이용한 결과는 정상적으로 반환됨
-    - 유닛 테스트에 .get('/notice?search=원티드');로 코드를 작성 후 실행을 하니 기대값과 다른 값 반환
+    - 유닛 테스트에 .get('/notice?search=원티드');로 코드를 작성 후 실행을 하니 기대값과 다른 값 반환</br>
+    **해결**
     - 전송할 때의 인코딩 방식을 맞춰주기 위해 코드를 `.get('/notice?search=' + encodeURIComponent('원티드'));`로 변경해서 해결
-3. 데이터 삭제를 해도 id가 1로 돌아가지 않는 문제 발생
+3. 데이터 삭제 시 id값 초기화<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**문제**
     - 테스트 케이스 실행 종료 후 `await table명.destroy({ where: {}, truncate: true, restartIdentity: true });`을 코드에 작성해도 id가 1로 초기화 되지 않음
-    - 여러 문서와 stackoverflow를 참고한 결과, `restartIdentity`가 제대로 작동하지 않는다는 문제 발견
+    - 여러 문서와 stackoverflow를 참고한 결과, `restartIdentity`가 제대로 작동하지 않는다는 문제 발견<br/>
+    **해결**
     - postgresql의 쿼리문을 직접 코드에 작성해서 `await sequelize.query('ALTER SEQUENCE "table명_id_seq" RESTART WITH 1');` 해당 문제를 해결
