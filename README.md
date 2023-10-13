@@ -64,16 +64,19 @@
 |9|POST|/apply|{<br/>&nbsp;"user_id":int,<br/>&nbsp;"notice_id":int<br/>}|채용공고에 지원<br/>중복지원 or 없는 채용공고id or 없는 사용자id일 경우 에러 발생
 
 ### 상세 구현 과정
-1. 개발환경 설정
+1. 개발환경 구축
 2. db설정 및 연결 확인
-3. 테이블 생성 및 관계 설정, 마이그레이션 실행
+3. 테이블 생성 및 관계 설정(sequelize 이용), 마이그레이션 실행
 4. 필요한 폴더 및 파일 생성
-    - 폴더 : models, controllers, routes
-    - 파일 : 각 테이블 별 model, controller, route
-5. 기능 생성
+    - 폴더 : models, controllers, routes 생성
+    - 파일 : 각 테이블 별 model, controller, route 생성
+5. 기능 구현
     - 각 파일에 요구기능 구현
+    1. model 파일에 필드 정의
+    2. controller 파일에 각 기능별 함수 작성
+    3. route 파일에 API 경로 정의
 6. postman을 이용해 구현 기능 확인
-7. unit test 구현
+7. unit test 구현(jest, supertest)
 8. README 파일 작성
 
 
