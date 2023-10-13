@@ -103,7 +103,7 @@ npx sequelize-cli db:migrate
 
 ### 서버 실행
 ```
-npm run dev
+npm start
 ```
 
 ## 유닛 테스트
