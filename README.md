@@ -104,7 +104,7 @@ DB_DATABASE=
 DB_HOST=localhost
 DB_DIALECT=postgres
 ```
-- postgresql이 없다면 해주세요.
+- postgresql이 없다면 설치해주세요.
 ### 데이터베이스 마이그레이션
 ```
 npx sequelize-cli db:migrate
