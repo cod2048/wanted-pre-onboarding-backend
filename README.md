@@ -1,4 +1,4 @@
-# wanted-pre-boarding-backend 선발과제_박준익
+# wanted-pre-onboarding-backend 선발과제_박준익
 
 ## 목차
 [1. 요구사항 분석](#요구사항-분석)<br/>
